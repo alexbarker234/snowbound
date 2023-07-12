@@ -2,7 +2,7 @@ import $ from "jquery";
 
 import { randBetween, lerp } from "./mathUtils";
 import './scssLoad.ts'
-import { SaveData, getGameData, load, save } from "./gameData";
+import { saveData, load, save } from "./gameData";
 import { initialiseStore } from "./economy";
 
 let spin = 0;
@@ -22,8 +22,6 @@ interface SnowParticle {
     };
 }
 
-let saveData: SaveData = undefined;
-
 $( document ).ready(function() {
     
     load();
@@ -31,8 +29,6 @@ $( document ).ready(function() {
     houseSmoke();
     loadStars();
     initCanvas();
-
-    saveData = getGameData();
     
     // save every 2 seconds
     setInterval(function() {

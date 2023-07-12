@@ -5,6 +5,7 @@
         "module": "es6",
         "target": "esnext",
         "jsx": "react",
+        "jsxFactory": "DOMcreateElement",
         "allowJs": true,
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true

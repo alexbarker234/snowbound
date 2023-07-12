@@ -4,9 +4,7 @@ export interface SaveData {
     autoClickers: number[]
 }
 
-let saveData: SaveData = { version: 0, frost: 0, autoClickers: [] };
-
-export const getGameData = () => saveData;
+export let saveData: SaveData = { version: 0, frost: 0, autoClickers: [] };
 
 export const load = () => {
     const localJSON = localStorage.getItem("saveData");

@@ -50,7 +50,7 @@
         height: 100%;
         background-color: var(--dark-grey);
 
-        width: 300px;
+        width: 400px;
         padding: 1rem;
         border-left: 5px white solid;
 
@@ -86,6 +86,10 @@
                 &:hover {
                     opacity: 0.8;
                 }
+                &.selected {
+                    opacity: 0.8;
+                    cursor: unset;
+                }
             }
         }
 
@@ -103,7 +107,7 @@
             }
         }
 
-        .upgrade {
+        .purchasable {
             margin-bottom: 0.5rem;
             transition: 0.2s;
             cursor: pointer;
@@ -114,13 +118,21 @@
                 opacity: 0.7;
             }
 
-            .upgrade-details {
+            .purchase-details {
                 display: flex;
                 flex-direction: column;
             }
-
-            .upgrade-cost {
+    
+            .purchase-cost {
                 font-size: 1rem;
+            }
+    
+            &.research {
+                display: block;
+                height: unset;
+            }
+            .progress-bar {
+                margin: 0.5rem 0;
             }
 
             .upgrade-total {

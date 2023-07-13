@@ -1,4 +1,4 @@
-const clickers: ClickerDetails[] = [
+export const clickers: ClickerDetails[] = [
     {
         name: "Cloud",
         description: "",
@@ -25,30 +25,47 @@ const clickers: ClickerDetails[] = [
     }
 ]
 
-const research: ResearchDetails[] =[
+export const research: ResearchDetails[] =[
     {
         name: "Stormfront",
         description: `Increase <span class="highlight">Cloud</span>'s production by 1%`,
         firstCost: 100,
         lastCost: 200,
-        max: 20
+        max: 20,
+        autoClickerBonus: {
+            index: 1,
+            percent: 0.01
+        }
+    },
+    {
+        name: "Cold Hands",
+        description: `Increase frost per click by 1.5x`,
+        firstCost: 100,
+        lastCost: 200,
+        max: 10,
+        clickBonus: 1.5
     }
 ]
 
-export default clickers
-
-interface ClickerDetails {
+export interface ClickerDetails {
     name: string,
     description: string,
     basePerSecond: number,
     baseCost: number,
 }
 
-interface ResearchDetails {
-    name: string,
-    description: string,
-    max: number,
+export interface ResearchDetails {
+    name: string;
+    description: string;
+    max: number;
     // will lerp between
-    firstCost: number,
-    lastCost: number,
+    firstCost: number;
+    lastCost: number;
+
+    // what the effect does
+    autoClickerBonus?: {
+        index: number;
+        percent: number;
+    };
+    clickBonus?: number;
 }

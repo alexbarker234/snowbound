@@ -3,8 +3,8 @@ import $ from "jquery";
 import { randBetween, lerp, round } from "./mathUtils";
 import "./scssLoad.ts";
 import { saveData, load, save } from "./gameData";
-import { initialiseStore, manageUpgradeVisuals } from "./economy";
-import clickers from "./storeData";
+import { initialiseStore, manageStoreVisuals } from "./economy";
+import {clickers} from "./storeData";
 import { addSnow, initScene } from "./scene";
 
 let spin = 0;
@@ -49,7 +49,7 @@ $(document).ready(function () {
         var frostThisInterval = (delta / interval) * perInterval;
 
         addFrost(frostThisInterval);
-        manageUpgradeVisuals();
+        manageStoreVisuals();
     }, interval);
 
     $("#frost").find("span").html(saveData.frost.toString());

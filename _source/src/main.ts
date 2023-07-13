@@ -4,7 +4,7 @@ import { randBetween, lerp, round } from "./mathUtils";
 import "./scssLoad.ts";
 import { saveData, load, save } from "./gameData";
 import { initialiseStore, manageUpgradeVisuals } from "./economy";
-import clickers from "./autoClickers";
+import clickers from "./storeData";
 import { addSnow, initScene } from "./scene";
 
 let spin = 0;

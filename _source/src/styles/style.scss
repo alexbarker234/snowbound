@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap');
 
+:root {
+    --blue: #499ad0;
+    --blue2: #2f759b;
+    --dark-grey: #293a4c;
+}
+
 html {
     width: 100%;
     height: 100%;
@@ -8,7 +14,7 @@ html {
 
 body {
     background-color: #21293f;
-    background-image: radial-gradient(ellipse at bottom, #499ad0 0%, #2f759b 50%);
+    background-image: radial-gradient(ellipse at bottom, var(--blue) 0%, var(--blue2) 50%);
     width: 100%;
     height: 100%;
     margin: 0;
@@ -21,6 +27,18 @@ body {
 * {
     box-sizing: border-box;
 }
+
+// no button styles L
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
 .title-card {
     background-color: #21293f;
     font-size: 10vw;

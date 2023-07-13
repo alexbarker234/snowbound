@@ -24,6 +24,17 @@ const clickers: ClickerDetails[] = [
         baseCost: 15000
     }
 ]
+
+const research: ResearchDetails[] =[
+    {
+        name: "Stormfront",
+        description: `Increase <span class="highlight">Cloud</span>'s production by 1%`,
+        firstCost: 100,
+        lastCost: 200,
+        max: 20
+    }
+]
+
 export default clickers
 
 interface ClickerDetails {
@@ -31,4 +42,13 @@ interface ClickerDetails {
     description: string,
     basePerSecond: number,
     baseCost: number,
+}
+
+interface ResearchDetails {
+    name: string,
+    description: string,
+    max: number,
+    // will lerp between
+    firstCost: number,
+    lastCost: number,
 }

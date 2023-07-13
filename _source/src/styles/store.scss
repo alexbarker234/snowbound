@@ -30,24 +30,25 @@
             height: 4px;
             margin-bottom: 5px;
             position: relative;
-    
-            background: #cdcdcd;
+
+            background: white;
             border-radius: 3px;
         }
+
         &:hover {
             opacity: 0.5;
         }
     }
 
     // checked box precedes store
-    input:checked ~ .store {
+    input:checked~.store {
         transform: none;
     }
 
     .store {
         width: 0px;
         height: 100%;
-        background-color: #293a4c;
+        background-color: var(--dark-grey);
 
         width: 300px;
         padding: 1rem;
@@ -64,6 +65,42 @@
 
         .store-title {
             font-size: 3rem;
+        }
+
+        .tab-buttons {
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+
+            .tab-button {
+                background-color: var(--blue);
+                margin: 0.3rem 0.5rem;
+                padding: 0.4rem;
+                border-radius: 5px;
+
+                transition: 0.2s;
+
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+
+        .tabs {
+            position: relative;
+            .tab {
+                position: absolute;
+                top: 0%;
+                transition: opacity 0.1s;
+                width: 100%;
+                &.disabled {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+            }
         }
 
         .upgrade {
@@ -95,6 +132,17 @@
                 cursor: unset;
                 opacity: 0.5;
             }
+        }
+        .research {
+
+        }
+    }
+}
+@media only screen and (max-width: 800px) {
+    .store-container {
+        .store {
+            width: 100%;
+            border: none;
         }
     }
 }

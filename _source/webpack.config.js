@@ -25,9 +25,9 @@ module.exports = {
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
     },
-    optimization: {
-        minimize: false,
-    },
+    // optimization: {
+    //     minimize: false,
+    // },
     devServer: {
         static: {
             directory: path.resolve(__dirname, "../"),

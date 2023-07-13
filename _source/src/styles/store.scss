@@ -127,7 +127,7 @@
             }
     
             .highlight {
-                color: rgb(174, 77, 204);
+                color: var(--purple);
             }
 
             .purchase-cost {
@@ -147,7 +147,7 @@
                 opacity: 0.7;
             }
 
-            &.disabled {
+            &.disabled, &.full {
                 cursor: unset;
                 opacity: 0.5;
             }

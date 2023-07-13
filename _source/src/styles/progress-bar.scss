@@ -6,6 +6,14 @@
     overflow: hidden;
     position: relative;
 
+    .text {
+        position: absolute;
+        left: 0%;
+        margin-left: 0.5rem;
+        z-index: 1;
+        font-size: 1rem;
+        line-height: 20px;
+    }
     .inner {
         position: absolute;
         height: 100%;

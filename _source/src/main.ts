@@ -90,7 +90,7 @@ function calculateStats() {
             stats.frostPerClick *= research.clickBonusPercent * saveData.research[index];
         }
         if (research.spinBonusMaxIncrease) {
-
+            stats.spinBonusMax *= research.spinBonusMaxIncrease * saveData.research[index]
         }
         if (research.spinPerClick) {
             stats.spinBonusPerClick *= research.spinPerClick * saveData.research[index]

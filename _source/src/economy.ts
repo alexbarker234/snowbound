@@ -41,7 +41,8 @@ export function initialiseStore() {
         saveData.research[index] ??= 0;
 
         let cost = calculateResearchCost(saveData.research[index], research);
-        const researchDiv = Research({ title: research.name, description: research.description, cost, total: saveData.research[index], max: research.max });
+        let progressText = `${(saveData.research[index] * research.percentPerLevel) * 100}%`;
+        const researchDiv = Research({ title: research.name, description: research.description, cost, total: saveData.research[index], max: research.max, progressText: progressText.toString() });
 
         $(researchDiv).on("click", function () {
             if (saveData.frost < cost || saveData.research[index] >= research.max) return;
@@ -50,9 +51,11 @@ export function initialiseStore() {
             saveData.frost -= cost;
 
             cost = calculateResearchCost(saveData.research[index], research);
+            progressText = `${(saveData.research[index] * research.percentPerLevel) * 100}%`;
 
             $(this).find(".purchase-cost").find(".amount").html(cost.toString());
             $(this).find(".progress-bar").find(".inner").css('width', `${(saveData.research[index] / research.max) * 100}%`);
+            $(this).find(".progress-bar").find(".text").html(progressText);
         });
 
         researchTab.append(researchDiv);

@@ -28,14 +28,15 @@ export const clickers: ClickerDetails[] = [
 export const research: ResearchDetails[] =[
     {
         name: "Stormfront",
-        description: `Increase <span class="highlight">Cloud</span>'s production by 1%`,
+        description: `Increase production of <span class="highlight">Cloud</span>s by 1%`,
         firstCost: 100,
         lastCost: 200,
         max: 20,
         autoClickerBonus: {
             index: 0,
             percent: 0.01
-        }
+        },
+        percentPerLevel: 0.01
     },
     {
         name: "Cold Hands",
@@ -43,15 +44,17 @@ export const research: ResearchDetails[] =[
         firstCost: 100,
         lastCost: 300,
         max: 10,
-        clickBonusPercent: 0.5
+        clickBonusPercent: 0.5,
+        percentPerLevel: 0.5
     },
     {
         name: "Superlubricity",
         description: `Decrease spin slowdown by 1%`,
         firstCost: 1000,
-        lastCost: 300,
+        lastCost: 3000,
         max: 10,
-        spinBonusSlowdownDecrease: 0.01
+        spinBonusSlowdownDecrease: 0.01,
+        percentPerLevel: 0.01
     }
 ]
 
@@ -69,6 +72,8 @@ export interface ResearchDetails {
     // will lerp between
     firstCost: number;
     lastCost: number;
+
+    percentPerLevel: number; // visual only
 
     // what the effect does
     autoClickerBonus?: {

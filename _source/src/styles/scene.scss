@@ -1,21 +1,21 @@
+.scene {
 
-.snowfall {
-    .snow {
+    canvas {
         position: absolute;
-    
-        background-color: white;
-        width: 10px;
-        height: 10px;
-        border-radius: 10px;
+        top: 0%;
+        left: 0%;
+    }
+
+    #front-canvas {
+        z-index: 300;
         pointer-events: none;
     }
-}
 
-.scene * {
-    pointer-events: none;
-    z-index: -1;
+    * {
+        pointer-events: none;
+        z-index: -1;
+    }
 }
-
 .ground {
     background-color: var(--dark-grey);
     width: 100%;

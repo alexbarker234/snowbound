@@ -33,17 +33,17 @@ export const research: ResearchDetails[] =[
         lastCost: 200,
         max: 20,
         autoClickerBonus: {
-            index: 1,
+            index: 0,
             percent: 0.01
         }
     },
     {
         name: "Cold Hands",
-        description: `Increase frost per click by 1.5x`,
+        description: `Increase frost per click by 50%`,
         firstCost: 100,
         lastCost: 200,
         max: 10,
-        clickBonus: 1.5
+        clickBonusPercent: 0.5
     }
 ]
 
@@ -67,5 +67,5 @@ export interface ResearchDetails {
         index: number;
         percent: number;
     };
-    clickBonus?: number;
+    clickBonusPercent?: number;
 }

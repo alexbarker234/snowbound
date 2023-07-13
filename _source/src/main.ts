@@ -4,18 +4,21 @@ import { randBetween, lerp, round } from "./mathUtils";
 import "./scssLoad.ts";
 import { saveData, load, save } from "./gameData";
 import { initialiseStore, manageStoreVisuals } from "./economy";
-import {clickers} from "./storeData";
-import { addSnow, initScene } from "./scene";
+import {clickers, research} from "./storeData";
+import { addSnow, click, initScene } from "./scene";
 
 let spin = 0;
 let spinSpeed = 0;
 const maxSpinSpeed = 5;
 const spinPerClick = 0.3;
 
+let stats: Stats = undefined
+
 $(document).ready(function () {
     load();
     initialiseStore();
     initScene();
+    stats = calculateStats();
 
     // save every 2 seconds
     setInterval(function () {
@@ -28,19 +31,11 @@ $(document).ready(function () {
     // setInterval is not super accurate, work with time deltas
     var lastCheck = Date.now();
     setInterval(function () {
-        let perSecond = 0;
-        clickers.forEach((clicker, index) => {
-            perSecond += clicker.basePerSecond * saveData.autoClickers[index];
-        });
+        stats = calculateStats();
 
-        const multiplier = 1 + spinSpeed / 5; 
-        perSecond *= multiplier;
-
-
-        perSecond = perSecond, 2;
-        const perInterval = (perSecond / 1000) * interval;
-        $("#frost-per-second").find("span").html(perSecond.toFixed(2));
-        $("#multiplier").find("span").html(multiplier.toFixed(2));
+        const perInterval = (stats.frostPerSecond / 1000) * interval;
+        $("#frost-per-second").find("span").html(stats.frostPerSecond.toFixed(2));
+        $("#multiplier").find("span").html(stats.multiplier.toFixed(2));
 
         var delta = Date.now() - lastCheck;
         if (delta > interval * 5) delta = interval; // no cheating by changing date thanks
@@ -58,7 +53,8 @@ $(document).ready(function () {
     snowflake.on("click", function () {
         addSnow()
         spinSpeed = Math.min(spinSpeed + spinPerClick, maxSpinSpeed);
-        addFrost(1);
+        addFrost(stats.frostPerClick);
+        click(stats.frostPerClick);
     });
     setInterval(function () {
         spin = (spin + spinSpeed) % 360;
@@ -71,4 +67,39 @@ $(document).ready(function () {
 function addFrost(amount: number) {
     saveData.frost += amount;
     $("#frost").find("span").html(Math.floor(saveData.frost).toString());
+}
+
+function calculateStats() {
+    const stats: Stats = {
+        frostPerSecond: 0,
+        multiplier: 1,
+        frostPerClick: 1
+    }
+
+    const clickerMultipliers = Array.from({ length: clickers.length }, () => 1);
+
+    // ADD UP RESEARCH BONUSES
+    research.forEach((research, index) => {
+        if (research.autoClickerBonus) {
+            clickerMultipliers[research.autoClickerBonus.index] += research.autoClickerBonus.percent * saveData.research[index];
+        }
+        if (research.clickBonusPercent) {
+            stats.frostPerClick *= research.clickBonusPercent * saveData.research[index];
+        }
+    })
+
+    clickers.forEach((clicker, index) => {
+        stats.frostPerSecond += clicker.basePerSecond * clickerMultipliers[index] * saveData.autoClickers[index];
+    });
+
+    stats.multiplier = 1 + spinSpeed / 5; 
+    stats.frostPerSecond *= stats.multiplier;
+
+    return stats;
+}
+
+interface Stats {
+    frostPerSecond: number;
+    multiplier: number;
+    frostPerClick: number;
 }

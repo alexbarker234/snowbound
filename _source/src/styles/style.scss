@@ -96,19 +96,21 @@ button, input[type="submit"], input[type="reset"] {
     margin-bottom: 1rem;
 
     transition: 0.2s;
-}
 
-.snowflake svg {
-    fill: white;
-    position: absolute;
+    z-index: 30;
 
-    top: 0%;
-
-    width: 100%;
-    height: 100%;
-}
-.snowflake:hover {
-    scale: 1.03;
+    svg {
+        fill: white;
+        position: absolute;
+    
+        top: 0%;
+    
+        width: 100%;
+        height: 100%;
+    }
+    &:hover {
+        scale: 1.03;
+    }
 }
 
 .stat {

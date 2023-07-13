@@ -1,3 +1,4 @@
+import { saveData } from "./gameData";
 import { randBetween } from "./mathUtils";
 import $ from "jquery";
 
@@ -6,8 +7,11 @@ export let snowList: SnowParticle[] = [];
 
 let timer = 0;
 
-export function addSnow() {
-    snowList.push({ x: Math.random() * snowfallCanvas.width, y: -10, size: randBetween(2, 8), vel: { y: randBetween(0.7, 1), x: randBetween(-0.1, 0.1) } });
+export function addSnow(x?: number, y?: number) {
+    if (snowList.length > 500) return;
+    if (!x) x = Math.random() * snowfallCanvas.width;
+    if (!y) y = -20;
+    snowList.push({ x , y, size: randBetween(2, 8), vel: { y: randBetween(0.7, 1), x: randBetween(-0.1, 0.1) } });
 }
 
 export function initScene() {
@@ -77,11 +81,23 @@ function houseSmoke() {
         }, 10000);
     }, 1000);
 }
+const randomNumbers = Array.from({ length: 50 }, () => Math.random());
+const randomNumbers2 = Array.from({ length: 50 }, () => Math.random());
+const randomNumbers3 = Array.from({ length: 50 }, () => Math.random());
 
 function drawClouds(ctx: CanvasRenderingContext2D) {
-    ctx.font = "48px serif";
-    ctx.fillStyle = "white";
-    ctx.fillText("☁", ctx.canvas.width * Math.sin(timer / 1000), 50);
+    let num = Math.min(saveData.autoClickers[0], 50);
+    let delay = 500;
+
+    for (let i = 0; i < num; i++) {
+        ctx.font = "48px serif";
+        ctx.fillStyle = "white";
+        var speed = (1 - randomNumbers3[i] * 0.2)
+        let x = ctx.canvas.width * ((1 + Math.sin(timer / 1000 * speed + randomNumbers[i] * 6.28)) / 2);
+        let y = 50 + randomNumbers2[i] * 30
+        ctx.fillText("☁", x, y);
+        if (Math.floor(timer + randomNumbers3[i] * delay) % delay == 0) addSnow(x + 10, y - 20)
+    }
 }
 
 interface SnowParticle {

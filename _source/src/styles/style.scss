@@ -18,7 +18,9 @@ body {
     overflow: hidden;
     user-select: none;
 }
-
+* {
+    box-sizing: border-box;
+}
 .title-card {
     background-color: #21293f;
     font-size: 10vw;
@@ -95,4 +97,12 @@ body {
     font-size: 2rem;
     text-align: center;
     background: linear-gradient(to right, transparent, rgba(41, 45, 58, 0.3), transparent);
+    margin-bottom: 0.5rem;
+}
+#frost-per-second {
+    font-size: 1rem;
+    text-align: center;
+    background: linear-gradient(to right, transparent, rgba(41, 45, 58, 0.3), transparent);
+    width: 80%;
+    margin: auto;
 }

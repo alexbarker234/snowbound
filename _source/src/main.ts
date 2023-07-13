@@ -26,11 +26,12 @@ $(document).ready(function () {
     // setInterval is not super accurate, work with time deltas
     var lastCheck = Date.now();
     setInterval(function () {
-        let perSecond = 0.2;
+        let perSecond = 0;
         clickers.forEach((clicker, index) => {
             perSecond += clicker.basePerSecond * saveData.autoClickers[index];
         });
         const perInterval = (perSecond / 1000) * interval;
+        $("#frost-per-second").find("span").html(perSecond.toString());
 
         var delta = Date.now() - lastCheck;
         if (delta > interval * 5) delta = interval; // no cheating by changing date thanks

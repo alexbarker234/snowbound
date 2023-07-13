@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-import { randBetween, lerp } from "./mathUtils";
+import { randBetween, lerp, round } from "./mathUtils";
 import "./scssLoad.ts";
 import { saveData, load, save } from "./gameData";
 import { initialiseStore, manageUpgradeVisuals } from "./economy";
@@ -9,6 +9,8 @@ import { addSnow, initScene } from "./scene";
 
 let spin = 0;
 let spinSpeed = 0;
+const maxSpinSpeed = 5;
+const spinPerClick = 0.3;
 
 $(document).ready(function () {
     load();
@@ -30,8 +32,15 @@ $(document).ready(function () {
         clickers.forEach((clicker, index) => {
             perSecond += clicker.basePerSecond * saveData.autoClickers[index];
         });
+
+        const multiplier = 1 + spinSpeed / 5; 
+        perSecond *= multiplier;
+
+
+        perSecond = perSecond, 2;
         const perInterval = (perSecond / 1000) * interval;
-        $("#frost-per-second").find("span").html(perSecond.toString());
+        $("#frost-per-second").find("span").html(perSecond.toFixed(2));
+        $("#multiplier").find("span").html(multiplier.toFixed(2));
 
         var delta = Date.now() - lastCheck;
         if (delta > interval * 5) delta = interval; // no cheating by changing date thanks
@@ -48,12 +57,13 @@ $(document).ready(function () {
     const snowflake = $(".snowflake");
     snowflake.on("click", function () {
         addSnow()
-        spinSpeed = Math.min(spinSpeed + 1, 5);
+        spinSpeed = Math.min(spinSpeed + spinPerClick, maxSpinSpeed);
         addFrost(1);
     });
     setInterval(function () {
         spin = (spin + spinSpeed) % 360;
         spinSpeed = lerp(spinSpeed, 0, 0.01);
+        if (spinSpeed < 0.01) spinSpeed = 0;
         snowflake.find("svg").css("rotate", `${spin}deg`);
     }, 10);
 });

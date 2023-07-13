@@ -79,21 +79,21 @@ function calculateStats() {
         spinBonusDecreaseRate: 0.01,
     };
 
-    const clickerMultipliers = Array.from({ length: clickers.length }, () => 1);
+    const autoClickerMultipliers = Array.from({ length: clickers.length }, () => 1);
 
     // ADD UP RESEARCH BONUSES
     research.forEach((research, index) => {
         if (research.autoClickerBonus) {
-            clickerMultipliers[research.autoClickerBonus.index] *= research.autoClickerBonus.percent * saveData.research[index];
+            autoClickerMultipliers[research.autoClickerBonus.index] *= 1 + (research.autoClickerBonus.percent * saveData.research[index]);
         }
         if (research.clickBonusPercent) {
-            stats.frostPerClick *= research.clickBonusPercent * saveData.research[index];
+            stats.frostPerClick *= 1 + (research.clickBonusPercent * saveData.research[index]);
         }
         if (research.spinBonusMaxIncrease) {
-            stats.spinBonusMax *= research.spinBonusMaxIncrease * saveData.research[index]
+            stats.spinBonusMax *= 1 + (research.spinBonusMaxIncrease * saveData.research[index])
         }
         if (research.spinPerClick) {
-            stats.spinBonusPerClick *= research.spinPerClick * saveData.research[index]
+            stats.spinBonusPerClick *= 1 + (research.spinPerClick * saveData.research[index])
         }
         if (research.spinBonusSlowdownDecrease) {
             stats.spinBonusDecreaseRate *= 1 - (research.spinBonusSlowdownDecrease * saveData.research[index]);
@@ -101,7 +101,7 @@ function calculateStats() {
     })
 
     clickers.forEach((clicker, index) => {
-        stats.frostPerSecond += clicker.basePerSecond * clickerMultipliers[index] * saveData.autoClickers[index];
+        stats.frostPerSecond += clicker.basePerSecond * autoClickerMultipliers[index] * saveData.autoClickers[index];
     });
 
     stats.multiplier += spinBonus;

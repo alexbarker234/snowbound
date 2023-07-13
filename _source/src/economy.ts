@@ -41,7 +41,7 @@ export function initialiseStore() {
         saveData.research[index] ??= 0;
 
         let cost = calculateResearchCost(saveData.research[index], research);
-        const researchDiv = Research({ title: research.name, cost, total: saveData.research[index], max: research.max });
+        const researchDiv = Research({ title: research.name, description: research.description, cost, total: saveData.research[index], max: research.max });
 
         $(researchDiv).on("click", function () {
             if (saveData.frost < cost || saveData.research[index] >= research.max) return;

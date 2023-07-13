@@ -41,9 +41,17 @@ export const research: ResearchDetails[] =[
         name: "Cold Hands",
         description: `Increase frost per click by 50%`,
         firstCost: 100,
-        lastCost: 200,
+        lastCost: 300,
         max: 10,
         clickBonusPercent: 0.5
+    },
+    {
+        name: "Superlubricity",
+        description: `Decrease spin slowdown by 1%`,
+        firstCost: 1000,
+        lastCost: 300,
+        max: 10,
+        spinBonusSlowdownDecrease: 0.01
     }
 ]
 
@@ -68,6 +76,8 @@ export interface ResearchDetails {
         percent: number;
     };
     clickBonusPercent?: number;
+
     spinPerClick?: number;
     spinBonusMaxIncrease?: number;
+    spinBonusSlowdownDecrease?: number;
 }

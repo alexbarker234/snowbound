@@ -23,11 +23,9 @@ $(document).ready(function () {
         save();
     }, 2000);
 
-    let counter = 0;
-    const interval = 50;
-
     // setInterval is not super accurate, work with time deltas
     var lastCheck = Date.now();
+    const interval = 50;
     setInterval(function () {
         stats = calculateStats();
 
@@ -86,10 +84,19 @@ function calculateStats() {
     // ADD UP RESEARCH BONUSES
     research.forEach((research, index) => {
         if (research.autoClickerBonus) {
-            clickerMultipliers[research.autoClickerBonus.index] += research.autoClickerBonus.percent * saveData.research[index];
+            clickerMultipliers[research.autoClickerBonus.index] *= research.autoClickerBonus.percent * saveData.research[index];
         }
         if (research.clickBonusPercent) {
             stats.frostPerClick *= research.clickBonusPercent * saveData.research[index];
+        }
+        if (research.spinBonusMaxIncrease) {
+
+        }
+        if (research.spinPerClick) {
+            stats.spinBonusPerClick *= research.spinPerClick * saveData.research[index]
+        }
+        if (research.spinBonusSlowdownDecrease) {
+            stats.spinBonusDecreaseRate *= 1 - (research.spinBonusSlowdownDecrease * saveData.research[index]);
         }
     })
 

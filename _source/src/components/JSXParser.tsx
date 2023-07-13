@@ -37,8 +37,8 @@ function DOMparseNode(element: any, properties: any, children: any) {
     DOMparseChildren(children).forEach((child: any) => {
         // this was modified by me because it didnt seem to like using variables - maybe i was just using it wrong
         if (child.nodeType === Node.ELEMENT_NODE) el.appendChild(child);
-        else if (child.nodeType === Node.TEXT_NODE) el.textContent += child.textContent;
-        else el.textContent += child;
+        else if (child.nodeType === Node.TEXT_NODE) el.insertAdjacentHTML( 'beforeend', child.textContent );
+        else el.insertAdjacentHTML( 'beforeend', child );
     });
     return el;
 }

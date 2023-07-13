@@ -7,10 +7,8 @@ import { initialiseStore, manageStoreVisuals } from "./economy";
 import {clickers, research} from "./storeData";
 import { addSnow, click, initScene } from "./scene";
 
-let spin = 0;
-let spinSpeed = 0;
-const maxSpinSpeed = 5;
-const spinPerClick = 0.3;
+let spin = 0; // visual only
+let spinBonus = 0;
 
 let stats: Stats = undefined
 
@@ -52,14 +50,17 @@ $(document).ready(function () {
     const snowflake = $(".snowflake");
     snowflake.on("click", function () {
         addSnow()
-        spinSpeed = Math.min(spinSpeed + spinPerClick, maxSpinSpeed);
+        spinBonus = Math.min(spinBonus + stats.spinBonusPerClick, stats.spinBonusMax);
+
         addFrost(stats.frostPerClick);
         click(stats.frostPerClick);
     });
     setInterval(function () {
-        spin = (spin + spinSpeed) % 360;
-        spinSpeed = lerp(spinSpeed, 0, 0.01);
-        if (spinSpeed < 0.01) spinSpeed = 0;
+        spin = (spin + spinBonus * 5) % 360;
+
+        spinBonus = lerp(spinBonus, 0, stats.spinBonusDecreaseRate);
+        if (spinBonus < 0.01) spinBonus = 0;
+
         snowflake.find("svg").css("rotate", `${spin}deg`);
     }, 10);
 });
@@ -73,8 +74,12 @@ function calculateStats() {
     const stats: Stats = {
         frostPerSecond: 0,
         multiplier: 1,
-        frostPerClick: 1
-    }
+        frostPerClick: 1,
+
+        spinBonusMax: 5,
+        spinBonusPerClick: 0.05,
+        spinBonusDecreaseRate: 0.01,
+    };
 
     const clickerMultipliers = Array.from({ length: clickers.length }, () => 1);
 
@@ -92,14 +97,19 @@ function calculateStats() {
         stats.frostPerSecond += clicker.basePerSecond * clickerMultipliers[index] * saveData.autoClickers[index];
     });
 
-    stats.multiplier = 1 + spinSpeed / 5; 
+    stats.multiplier += spinBonus;
     stats.frostPerSecond *= stats.multiplier;
 
     return stats;
 }
 
 interface Stats {
+    frostPerClick: number;
+    
     frostPerSecond: number;
     multiplier: number;
-    frostPerClick: number;
+
+    spinBonusPerClick: number;
+    spinBonusMax: number;
+    spinBonusDecreaseRate: number;
 }

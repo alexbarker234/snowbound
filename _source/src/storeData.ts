@@ -68,4 +68,6 @@ export interface ResearchDetails {
         percent: number;
     };
     clickBonusPercent?: number;
+    spinPerClick?: number;
+    spinBonusMaxIncrease?: number;
 }

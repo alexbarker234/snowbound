@@ -1,12 +1,18 @@
-const path = require('path');
+const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: "./src/main.ts",
-    plugins: [new MiniCssExtractPlugin({ filename: "bundle.css" })],
+    plugins: [
+        new MiniCssExtractPlugin({ filename: "main.css" }),
+        new CopyPlugin({
+            patterns: ["public"],
+        }),
+    ],
     output: {
-        path: path.resolve(__dirname, "../packed/"),
-        filename: "bundle.js",
+        path: path.resolve(__dirname, "./build/"),
+        filename: "main.js",
     },
     module: {
         rules: [

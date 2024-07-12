@@ -1,16 +1,16 @@
 import $ from "jquery";
 
 import { randBetween, lerp, round } from "./mathUtils";
-import "./scssLoad.ts";
+import "./scssLoad";
 import { saveData, load, save } from "./gameData";
 import { initialiseStore, manageStoreVisuals } from "./economy";
-import {clickers, research} from "./storeData";
+import { clickers, research } from "./storeData";
 import { addSnow, click, initScene } from "./scene";
 
 let spin = 0; // visual only
 let spinBonus = 0;
 
-let stats: Stats = undefined
+let stats: Stats = undefined;
 
 $(document).ready(function () {
     load();
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     const snowflake = $(".snowflake");
     snowflake.on("click", function () {
-        addSnow()
+        addSnow();
         spinBonus = Math.min(spinBonus + stats.spinBonusPerClick, stats.spinBonusMax);
 
         addFrost(stats.frostPerClick);
@@ -84,21 +84,21 @@ function calculateStats() {
     // ADD UP RESEARCH BONUSES
     research.forEach((research, index) => {
         if (research.autoClickerBonus) {
-            autoClickerMultipliers[research.autoClickerBonus.index] *= 1 + (research.autoClickerBonus.percent * saveData.research[index]);
+            autoClickerMultipliers[research.autoClickerBonus.index] *= 1 + research.autoClickerBonus.percent * saveData.research[index];
         }
         if (research.clickBonusPercent) {
-            stats.frostPerClick *= 1 + (research.clickBonusPercent * saveData.research[index]);
+            stats.frostPerClick *= 1 + research.clickBonusPercent * saveData.research[index];
         }
         if (research.spinBonusMaxIncrease) {
-            stats.spinBonusMax *= 1 + (research.spinBonusMaxIncrease * saveData.research[index])
+            stats.spinBonusMax *= 1 + research.spinBonusMaxIncrease * saveData.research[index];
         }
         if (research.spinPerClick) {
-            stats.spinBonusPerClick *= 1 + (research.spinPerClick * saveData.research[index])
+            stats.spinBonusPerClick *= 1 + research.spinPerClick * saveData.research[index];
         }
         if (research.spinBonusSlowdownDecrease) {
-            stats.spinBonusDecreaseRate *= 1 - (research.spinBonusSlowdownDecrease * saveData.research[index]);
+            stats.spinBonusDecreaseRate *= 1 - research.spinBonusSlowdownDecrease * saveData.research[index];
         }
-    })
+    });
 
     clickers.forEach((clicker, index) => {
         stats.frostPerSecond += clicker.basePerSecond * autoClickerMultipliers[index] * saveData.autoClickers[index];
@@ -112,7 +112,7 @@ function calculateStats() {
 
 interface Stats {
     frostPerClick: number;
-    
+
     frostPerSecond: number;
     multiplier: number;
 

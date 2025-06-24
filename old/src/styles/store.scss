@@ -1,0 +1,167 @@
+.store-container {
+    --menu-size: 30px;
+
+    input {
+        position: absolute;
+        right: 0%;
+        margin: 1rem;
+
+        display: block;
+        width: var(--menu-size);
+        height: var(--menu-size);
+
+        cursor: pointer;
+
+        opacity: 0;
+
+        z-index: 1;
+    }
+
+    .hamburger {
+        position: absolute;
+        right: 0%;
+        margin: 1rem;
+        pointer-events: none;
+        z-index: 2;
+
+        .meat {
+            display: block;
+            width: var(--menu-size);
+            height: 4px;
+            margin-bottom: 5px;
+            position: relative;
+
+            background: white;
+            border-radius: 3px;
+        }
+
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+
+    // checked box precedes store
+    input:checked~.store {
+        transform: none;
+    }
+
+    .store {
+        width: 0px;
+        height: 100%;
+        background-color: var(--dark-grey);
+
+        width: 400px;
+        padding: 1rem;
+        border-left: 5px white solid;
+
+        transform: translateX(100%);
+
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        font-size: 1.5rem;
+        transition: 0.2s;
+
+        .store-title {
+            font-size: 3rem;
+        }
+
+        .tab-buttons {
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+
+            .tab-button {
+                background-color: var(--blue);
+                margin: 0.3rem 0.5rem;
+                padding: 0.4rem;
+                border-radius: 5px;
+
+                transition: 0.2s;
+
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+                &.selected {
+                    opacity: 0.8;
+                    cursor: unset;
+                }
+            }
+        }
+
+        .tabs {
+            position: relative;
+            .tab {
+                position: absolute;
+                top: 0%;
+                transition: opacity 0.1s;
+                width: 100%;
+                &.disabled {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+            }
+        }
+
+        .purchasable {
+            margin-bottom: 0.5rem;
+            transition: 0.2s;
+            cursor: pointer;
+            height: 3rem;
+            display: flex;
+
+            &:hover {
+                opacity: 0.7;
+            }
+
+            .purchase-details {
+                display: flex;
+                flex-direction: column;
+                .description {
+                    font-size: 1rem;
+                }
+            }
+    
+            .highlight {
+                color: var(--purple);
+            }
+
+            .purchase-cost {
+                font-size: 1rem;
+            }
+
+            &.research {
+                display: block;
+                height: unset;
+            }
+            .progress-bar {
+                margin: 0.5rem 0;
+            }
+
+            .upgrade-total {
+                margin-left: auto;
+                opacity: 0.7;
+            }
+
+            &.disabled, &.full {
+                cursor: unset;
+                opacity: 0.5;
+            }
+        }
+        .research {
+
+        }
+    }
+}
+@media only screen and (max-width: 800px) {
+    .store-container {
+        .store {
+            width: 100%;
+            border: none;
+        }
+    }
+}
